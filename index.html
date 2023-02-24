@@ -5,9 +5,41 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Correzione biglietto del treno</title>
+
+  <style>
+    #ticket {
+      display: none;
+
+      padding: 20px;
+      border: 1px solid black;
+      background-color: lightblue;
+    }
+  </style>
 </head>
 <body>
-  
+  <h1>Calcolo biglietto del treno</h1>
+  <div>
+    <input id="tripKm" max="200" type="number" name="tripKm" placeholder="Quanti KM devi percorrere?">
+    <input id="userAge" type="number" placeholder="Quanti anni hai?">
+    <br>
+    <button id="generateTicketButton">Calcola il prezzo del biglietto</button>
+  </div>
+
+  <hr>
+
+
+  <div id="ticket">
+    <button id="closeTicket">X</button>
+
+    <div id="ticketKm"></div>
+    <div id="ticketUserAge"></div>
+    <div id="ticketDiscount"></div>
+
+    <div id="ticketPrice"></div>
+  </div>
+
+
+
   <!-- js -->
   <script type="text/javascript" src="js/script.js"></script>
 </body>

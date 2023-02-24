@@ -22,47 +22,86 @@
 
 
 // - chiedere e memorizzare numero di km e età dell'utente
-let tripKM = parseInt(prompt("Ciao, quanti KM devi percorrere?"));
-let userAge = parseInt(prompt("Quanti anni hai?"));
+
+let tripKmEl = document.getElementById("tripKm");
+let userAgeEl = document.getElementById("userAge");
+
 
 // prezzo per km 
 let pricePerKm = 0.21;
 
-// - calcoliamo il prezzo base del biglietto (km * 0.21)
-let baseTicketPrice = tripKM * pricePerKm;
 
-console.log("Prezzo base: " + baseTicketPrice);
+let generateTicketButtonEl = document.getElementById("generateTicketButton");
 
-// dichiaro la variabile del prezzo finale
-let finalPrice;
+generateTicketButtonEl.addEventListener('click', function() {
 
-// ? SE l'età è < 18
-if(userAge < 18) {
+  // - calcoliamo il prezzo base del biglietto (km * 0.21)
+  let baseTicketPrice = tripKmEl.value * pricePerKm;
 
-  // ° prezzoFinale = prezzoBase - (prezzoBase / 100 * 20)
-  finalPrice = baseTicketPrice - baseTicketPrice / 100 * 20;
-  console.log("prezzo scontato minorenni: " + finalPrice);
+  // dichiaro la variabile del prezzo finale
+  let finalPrice;
 
-} else if(userAge >= 65) {
+  if(!isNaN(tripKmEl.value) && !isNaN(userAgeEl.value)) {
 
-  finalPrice = baseTicketPrice - baseTicketPrice * 0.4;
-  console.log("prezzo scontato over65: " + finalPrice);
-
-} else {
-
-  finalPrice = baseTicketPrice;
-  console.log("prezzo: " + finalPrice);
-
-}
+    let discount;
 
 
-// - formatta prezzoFinale con due decimali
-finalPrice = finalPrice.toFixed(2);
-console.log("Prezzo finale formattato: " + finalPrice);
+    // ? SE l'età è < 18
+    if(userAgeEl.value < 18) {
 
-// - stampa a schermo prezzoFinale in forma umana
-document.writeln(`
-  Ciao, devi percorrere ${tripKM} km,
-  hai ${userAge} anni,
-  il tuo prezzo finale è di ${finalPrice}€
-`);
+      // ° prezzoFinale = prezzoBase - (prezzoBase / 100 * 20)
+      finalPrice = baseTicketPrice - baseTicketPrice / 100 * 20;
+
+      discount = '20%';
+      console.log("prezzo scontato minorenni: " + finalPrice);
+
+    } else if(userAgeEl.value >= 65) { //: ALTRIMENTI SE l'età è > 65
+
+      finalPrice = baseTicketPrice - baseTicketPrice * 0.4;
+
+      discount = "40%";
+      console.log("prezzo scontato over65: " + finalPrice);
+
+    } else { //: ALTRIMENTI 
+
+      finalPrice = baseTicketPrice;
+
+      discount = "nessuno";
+      console.log("prezzo: " + finalPrice);
+      
+    }
+
+
+    // - formatta prezzoFinale con due decimali
+    finalPrice = finalPrice.toFixed(2);
+
+    document.getElementById("ticket").style.display = "block";
+
+    // let ticketKmEl = document.getElementById("ticketKm");
+    document.getElementById("ticketKm").innerHTML = "Km del viaggio: " + tripKmEl.value;
+    document.getElementById("ticketUserAge").innerHTML = "Età dell'utente: " + userAgeEl.value;
+    document.getElementById("ticketDiscount").innerHTML = "Sconto applicato: " + discount;
+
+    document.getElementById("ticketPrice").innerHTML = "Prezzo del biglietto: <strong>€" + finalPrice + "</strong>";
+
+  } else {
+
+    console.log("inserisci un numero in entrambi i campi!");
+    
+  }
+
+  
+
+});
+
+
+
+
+document.getElementById("closeTicket").addEventListener("click", function() {
+  
+  document.getElementById("ticket").style.display = "none";
+  tripKmEl.value = "";
+  userAgeEl.value = "";
+
+});
+
